@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tra cứu tàng thư Vạn Tường</title>
+    <style>
+        :root {
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --primary: #1d4ed8;
+            --primary-dark: #1e40af;
+            --primary-soft: #eff6ff;
+            --ok: #047857;
+            --ok-soft: #ecfdf5;
+            --warn: #b45309;
+            --warn-soft: #fffbeb;
+            --danger: #b91c1c;
+            --danger-soft: #fef2f2;
+            --radius: 14px;
+            --shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.45;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Login Screen */
+        .login-wrap {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: linear-gradient(160deg, #eff6ff 0%, #f1f5f9 55%, #e2e8f0 100%);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 26px 22px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+        }
+
+        .login-brand {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .login-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .login-sub {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
+
+        .input, select, textarea {
+            width: 100%;
+            padding: 11px 13px;
+            font-size: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 11px;
+            background: #fff;
+            color: var(--ink);
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14);
+        }
+
+        .pw-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .pw-box .input {
+            padding-right: 46px;
+        }
+
+        .pw-toggle {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 7px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .pw-toggle:hover {
+            background: #f1f5f9;
+            color: var(--ink);
+        }
+
+        .msg-error {
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: 1px solid #fecaca;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        /* Header */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            box-shadow: 0 1px 6px rgba(15, 23, 42, 0.04);
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: var(--primary);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .brand-meta {
+            font-size: 12px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .role-pill {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid #bfdbfe;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 40px;
+            padding: 8px 13px;
+            border-radius: 11px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.15s, transform 0.08s;
+            white-space: nowrap;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:hover {
+            background: #f8fafc;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-ok {
+            background: var(--ok);
+            border-color: var(--ok);
+            color: #fff;
+        }
+
+        .btn-warn {
+            background: var(--warn-soft);
+            border-color: #fde68a;
+            color: var(--warn);
+        }
+
+        .btn-danger {
+            background: var(--danger-soft);
+            border-color: #fecaca;
+            color: var(--danger);
+        }
+
+        .btn-sm {
+            min-height: 36px;
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 9px;
+        }
+
+        .btn-full {
+            width: 100%;
+            min-height: 44px;
+            font-size: 15px;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 14px;
+        }
+
+        .alert-banner {
+            background: var(--danger-soft);
+            border: 1px solid #fecaca;
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color 0.15s;
+        }
+
+        .stat-card:hover {
+            border-color: #93c5fd;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .stat-num {
+            font-size: 22px;
+            font-weight: 800;
+            margin-top: 2px;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 14px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 720px) {
+            .filter-row {
+                grid-template-columns: 2fr 1fr 1fr;
+            }
+        }
+
+        .chip-bar {
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            padding-top: 10px;
+            padding-bottom: 2px;
+        }
+
+        .chip {
+            border: 1px solid var(--line);
+            background: #f8fafc;
+            color: #334155;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            min-height: 34px;
+        }
+
+        .chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        /* Records List */
+        .records-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .records-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1040px) {
+            .records-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .rec-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .rec-card.is-overdue {
+            border-color: #fca5a5;
+            background: #fffafa;
+        }
+
+        .rec-card.is-due {
+            border-color: #fcd34d;
+        }
+
+        .rec-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .rec-code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            font-weight: 800;
+            background: var(--primary-soft);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 7px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-danger {
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: 1px solid #fecaca;
+        }
+
+        .badge-warn {
+            background: var(--warn-soft);
+            color: var(--warn);
+            border: 1px solid #fde68a;
+        }
+
+        .badge-ok {
+            background: var(--ok-soft);
+            color: var(--ok);
+            border: 1px solid #a7f3d0;
+        }
+
+        .badge-info {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .rec-name {
+            margin: 6px 0 4px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .rec-line {
+            font-size: 13px;
+            color: #334155;
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .phone-link {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .phone-link:hover {
+            text-decoration: underline;
+        }
+
+        .dates-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
+        .dates-box small {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .thumb-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .thumb-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 8px;
+            border-radius: 9px;
+            border: 1px solid var(--line);
+            background: #f8fafc;
+            font-size: 11px;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+        }
+
+        .thumb-btn img {
+            width: 28px;
+            height: 28px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .rec-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding-top: 8px;
+            border-top: 1px solid var(--line);
+        }
+
+        /* Modals */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.55);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        @media (min-width: 640px) {
+            .modal-backdrop {
+                align-items: center;
+                padding: 16px;
+            }
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 680px;
+            max-height: 92dvh;
+            background: #fff;
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+        }
+
+        @media (min-width: 640px) {
+            .modal-card {
+                border-radius: 18px;
+            }
+        }
+
+        .modal-head {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .modal-head h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-foot {
+            padding: 12px 16px;
+            border-top: 1px solid var(--line);
+            background: #f8fafc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 560px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .quick-days {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .photo-box {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .photo-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .preview-wrap {
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .preview-wrap img {
+            width: 100%;
+            max-height: 210px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        /* Appointment Slip */
+        .slip-paper {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 20px;
+            color: #0f172a;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        .slip-top {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 12px;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .slip-title {
+            text-align: center;
+            margin: 10px 0 14px;
+        }
+
+        .slip-title h2 {
+            margin: 0;
+            font-size: 19px;
+            text-transform: uppercase;
+        }
+
+        .slip-row {
+            margin: 6px 0;
+            font-size: 15px;
+        }
+
+        .slip-sign {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+        }
+
+        /* Account table */
+        .acc-item {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 11px 12px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Toast */
+        .toast-box {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: min(92vw, 380px);
+            pointer-events: none;
+        }
+
+        .toast {
+            background: #0f172a;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 11px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+        }
+
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #slipPrintArea, #slipPrintArea * {
+                visibility: visible !important;
+            }
+            #slipPrintArea {
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                border: none !important;
+                padding: 10mm !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MÀN HÌNH ĐĂNG NHẬP SẠCH (KHÔNG ĐĂNG NHẬP NHANH / KHÔNG HIỆN TÀI KHOẢN MẪU) -->
+    <section id="loginScreen" class="login-wrap">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="login-badge">VT</div>
+                <h1 class="login-title">Tra cứu tàng thư Vạn Tường</h1>
+                <p class="login-sub">Đăng nhập hệ thống quản lý hồ sơ</p>
+            </div>
+
+            <div id="loginError" class="msg-error hidden"></div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="loginUsername">Tên đăng nhập</label>
+                    <input id="loginUsername" class="input" type="text" autocomplete="username" required placeholder="Nhập tên đăng nhập">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Mật khẩu</label>
+                    <div class="pw-box">
+                        <input id="loginPassword" class="input" type="password" autocomplete="current-password" required placeholder="Nhập mật khẩu">
+                        <button type="button" class="pw-toggle" onclick="togglePasswordField('loginPassword', this)">Hiện</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Đăng nhập</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ỨNG DỤNG CHÍNH -->
+    <div id="appScreen" class="hidden">
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="brand-box">
+                    <div class="brand-mark">VT</div>
+                    <div>
+                        <h1 class="brand-title">Tra cứu tàng thư Vạn Tường</h1>
+                        <div class="brand-meta">
+                            <span id="currentUserLabel">Tài khoản</span>
+                            <span id="currentRoleBadge" class="role-pill">Vai trò</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button type="button" id="btnAddRecord" class="btn btn-primary" onclick="openRecordModal()">+ Tiếp nhận</button>
+                    <button type="button" class="btn" onclick="openAccountModal()">Tài khoản</button>
+                    <button type="button" class="btn" onclick="openBackupModal()">Sao lưu</button>
+                    <button type="button" class="btn btn-danger" onclick="handleLogout()">Đăng xuất</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <!-- Cảnh báo hồ sơ quá hạn / sắp đến hạn -->
+            <div id="deadlineAlert" class="alert-banner hidden">
+                <span id="deadlineAlertText"></span>
+                <button type="button" class="btn btn-sm btn-danger" onclick="setQuickFilter('urgent')">Xem hồ sơ gấp</button>
+            </div>
+
+            <!-- Thống kê -->
+            <section class="stats-grid">
+                <button type="button" class="stat-card" onclick="setQuickFilter('all')">
+                    <div class="stat-label">Tổng hồ sơ</div>
+                    <div class="stat-num" id="stTotal">0</div>
+                </button>
+                <button type="button" class="stat-card" onclick="setQuickFilter('processing')">
+                    <div class="stat-label">Đang xử lý</div>
+                    <div class="stat-num" id="stProcessing" style="color:#1d4ed8">0</div>
+                </button>
+                <button type="button" class="stat-card" onclick="setQuickFilter('dueSoon')">
+                    <div class="stat-label">Sắp đến hạn</div>
+                    <div class="stat-num" id="stDueSoon" style="color:#b45309">0</div>
+                </button>
+                <button type="button" class="stat-card" onclick="setQuickFilter('overdue')">
+                    <div class="stat-label">Quá hạn</div>
+                    <div class="stat-num" id="stOverdue" style="color:#b91c1c">0</div>
+                </button>
+                <button type="button" class="stat-card" onclick="setQuickFilter('returned')">
+                    <div class="stat-label">Đã trả kết quả</div>
+                    <div class="stat-num" id="stReturned" style="color:#047857">0</div>
+                </button>
+            </section>
+
+            <!-- Tìm kiếm & lọc -->
+            <section class="panel">
+                <div class="filter-row">
+                    <input id="searchInput" class="input" type="search" oninput="renderRecords()" placeholder="Tìm tên người nộp, SĐT, thôn, số hồ sơ cư trú...">
+                    <select id="hamletFilter" onchange="renderRecords()">
+                        <option value="all">Tất cả các thôn</option>
+                    </select>
+                    <select id="sortFilter" onchange="renderRecords()">
+                        <option value="urgent">Ưu tiên đến hạn gấp</option>
+                        <option value="newest">Mới tiếp nhận nhất</option>
+                        <option value="dueAsc">Hạn trả gần nhất</option>
+                    </select>
+                </div>
+
+                <div class="chip-bar" id="quickChips">
+                    <button type="button" class="chip active" data-f="all" onclick="setQuickFilter('all')">Tất cả</button>
+                    <button type="button" class="chip" data-f="urgent" onclick="setQuickFilter('urgent')">Cần xử lý gấp</button>
+                    <button type="button" class="chip" data-f="overdue" onclick="setQuickFilter('overdue')">Quá hạn</button>
+                    <button type="button" class="chip" data-f="dueSoon" onclick="setQuickFilter('dueSoon')">Hôm nay & ngày mai</button>
+                    <button type="button" class="chip" data-f="processing" onclick="setQuickFilter('processing')">Chưa trả KQ</button>
+                    <button type="button" class="chip" data-f="returned" onclick="setQuickFilter('returned')">Đã trả KQ</button>
+                </div>
+            </section>
+
+            <!-- Danh sách hồ sơ -->
+            <section>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 2px;">
+                    <strong style="font-size:14px;">Danh sách hồ sơ (<span id="visibleCount">0</span>)</strong>
+                    <span id="storageBadge" style="font-size:12px;color:var(--muted);">Lưu trữ máy chủ</span>
+                </div>
+                <div id="recordsList" class="records-grid"></div>
+                <div id="emptyList" class="panel hidden" style="text-align:center;color:var(--muted);padding:28px;">
+                    Không có hồ sơ nào khớp với bộ lọc hiện tại.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL THÊM / SỬA HỒ SƠ -->
+    <div id="recordModal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3 id="recordModalTitle">Tiếp nhận hồ sơ</h3>
+                <button type="button" class="btn btn-sm" onclick="closeModal('recordModal')">Đóng</button>
+            </div>
+            <form id="recordForm" onsubmit="saveRecord(event)" class="modal-body">
+                <input type="hidden" id="recId">
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="recDate">Ngày tiếp nhận *</label>
+                        <input id="recDate" class="input" type="date" required onchange="onReceiveDateChange()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="dueDate">Ngày hẹn trả *</label>
+                        <input id="dueDate" class="input" type="date" required>
+                        <div class="quick-days">
+                            <button type="button" class="btn btn-sm btn-warn" onclick="setDuePlusDays(7)">+7 ngày</button>
+                            <button type="button" class="btn btn-sm btn-warn" onclick="setDuePlusDays(10)">+10 ngày</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="applicantName">Người nộp *</label>
+                        <input id="applicantName" class="input" type="text" required placeholder="Họ và tên người nộp">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="applicantPhone">SĐT người nộp *</label>
+                        <input id="applicantPhone" class="input" type="tel" required placeholder="Số điện thoại">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="hamletInput">Thôn *</label>
+                        <input id="hamletInput" class="input" list="hamletDatalist" type="text" required placeholder="Nhập hoặc chọn thôn">
+                        <datalist id="hamletDatalist">
+                            <option value="Thôn 1">
+                            <option value="Thôn 2">
+                            <option value="Thôn 3">
+                            <option value="Thôn 4">
+                            <option value="Thôn Đông">
+                            <option value="Thôn Tây">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="recordNumber">Số hồ sơ cư trú *</label>
+                        <input id="recordNumber" class="input" type="text" required placeholder="VD: TT-2026-001">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="recordNote">Nội dung tra cứu / ghi chú</label>
+                    <textarea id="recordNote" rows="2" placeholder="Nội dung yêu cầu tra cứu tàng thư..."></textarea>
+                </div>
+
+                <!-- Ảnh đơn tiếp nhận -->
+                <div class="photo-box">
+                    <div class="form-label" style="margin:0;">Ảnh đơn tiếp nhận</div>
+                    <div class="photo-btns">
+                        <label class="btn btn-sm btn-primary" style="cursor:pointer;">
+                            Chụp camera
+                            <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handlePhotoChange(event, 'receive')">
+                        </label>
+                        <label class="btn btn-sm" style="cursor:pointer;">
+                            Chọn tệp ảnh
+                            <input type="file" accept="image/*" class="hidden" onchange="handlePhotoChange(event, 'receive')">
+                        </label>
+                    </div>
+                    <div id="receivePreviewWrap" class="preview-wrap hidden">
+                        <img id="receivePreviewImg" alt="Ảnh đơn tiếp nhận">
+                        <div style="margin-top:6px;">
+                            <button type="button" class="btn btn-sm btn-danger" onclick="clearPhoto('receive')">Xóa ảnh đơn</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Đã trả kết quả & upload ảnh kết quả -->
+                <div class="photo-box" style="background:#f0fdf4;border-color:#bbf7d0;">
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;cursor:pointer;">
+                        <input id="isReturnedChk" type="checkbox" style="width:18px;height:18px;" onchange="toggleReturnedBox()">
+                        <span>Đã trả kết quả</span>
+                    </label>
+
+                    <div id="returnedFields" class="hidden" style="margin-top:10px;">
+                        <div class="form-group">
+                            <label class="form-label" for="returnedDate">Ngày trả kết quả</label>
+                            <input id="returnedDate" class="input" type="date">
+                        </div>
+
+                        <div class="form-label" style="margin:0;">Ảnh kết quả / biên nhận đã trả</div>
+                        <div class="photo-btns">
+                            <label class="btn btn-sm btn-ok" style="cursor:pointer;">
+                                Chụp camera
+                                <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handlePhotoChange(event, 'return')">
+                            </label>
+                            <label class="btn btn-sm" style="cursor:pointer;">
+                                Chọn tệp ảnh
+                                <input type="file" accept="image/*" class="hidden" onchange="handlePhotoChange(event, 'return')">
+                            </label>
+                        </div>
+                        <div id="returnPreviewWrap" class="preview-wrap hidden">
+                            <img id="returnPreviewImg" alt="Ảnh kết quả">
+                            <div style="margin-top:6px;">
+                                <button type="button" class="btn btn-sm btn-danger" onclick="clearPhoto('return')">Xóa ảnh kết quả</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-foot" style="margin:14px -16px -16px;">
+                    <button type="button" class="btn" onclick="closeModal('recordModal')">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu hồ sơ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL GIẤY HẸN ĐƠN GIẢN (+7 / +10 NGÀY) -->
+    <div id="slipModal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3>Giấy hẹn trả kết quả</h3>
+                <button type="button" class="btn btn-sm" onclick="closeModal('slipModal')">Đóng</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                    <span style="font-size:13px;font-weight:700;">Chọn nhanh hạn trả từ ngày tiếp nhận:</span>
+                    <div style="display:flex;gap:8px;">
+                        <button type="button" class="btn btn-sm btn-warn" onclick="applySlipQuickDays(7)">+7 ngày</button>
+                        <button type="button" class="btn btn-sm btn-warn" onclick="applySlipQuickDays(10)">+10 ngày</button>
+                    </div>
+                </div>
+
+                <div id="slipPrintArea" class="slip-paper">
+                    <div class="slip-top">
+                        <div>
+                            <div style="font-weight:800;">TRA CỨU TÀNG THƯ VẠN TƯỜNG</div>
+                            <div>Bộ phận tiếp nhận hồ sơ</div>
+                        </div>
+                        <div>
+                            <div style="font-weight:800;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                            <div style="font-weight:700;">Độc lập - Tự do - Hạnh phúc</div>
+                        </div>
+                    </div>
+
+                    <div class="slip-title">
+                        <h2>GIẤY HẸN TRẢ KẾT QUẢ</h2>
+                        <div style="font-size:14px;margin-top:4px;">Số hồ sơ cư trú: <strong id="slipRecNum"></strong></div>
+                    </div>
+
+                    <div class="slip-row">Người nộp: <strong id="slipName"></strong></div>
+                    <div class="slip-row">Số điện thoại: <strong id="slipPhone"></strong></div>
+                    <div class="slip-row">Thôn: <strong id="slipHamlet"></strong></div>
+                    <div class="slip-row" id="slipNoteLine">Nội dung: <span id="slipNote"></span></div>
+                    <div class="slip-row">Ngày tiếp nhận: <strong id="slipRecDate"></strong></div>
+                    <div class="slip-row">Ngày hẹn trả kết quả: <strong id="slipDueDate" style="text-decoration:underline;"></strong></div>
+
+                    <p style="font-size:13px;font-style:italic;margin-top:12px;">
+                        Khi đến nhận kết quả, vui lòng mang theo giấy hẹn và giấy tờ tùy thân.
+                    </p>
+
+                    <div class="slip-sign">
+                        <div>
+                            <div style="font-weight:700;">NGƯỜI NỘP</div>
+                            <div style="font-size:12px;font-style:italic;">(Ký, ghi rõ họ tên)</div>
+                            <div style="height:46px;"></div>
+                            <div id="slipSignName" style="font-weight:700;"></div>
+                        </div>
+                        <div>
+                            <div id="slipSignDate" style="font-size:12px;font-style:italic;"></div>
+                            <div style="font-weight:700;">CÁN BỘ TIẾP NHẬN</div>
+                            <div style="font-size:12px;font-style:italic;">(Ký, ghi rõ họ tên)</div>
+                            <div style="height:46px;"></div>
+                            <div id="slipSignOfficer" style="font-weight:700;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn btn-ok" onclick="downloadSlipPng()">Tải ảnh PNG</button>
+                <button type="button" class="btn btn-primary" onclick="window.print()">In trực tiếp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TÀI KHOẢN & PHÂN QUYỀN -->
+    <div id="accountModal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3>Tài khoản & đổi mật khẩu</h3>
+                <button type="button" class="btn btn-sm" onclick="closeModal('accountModal')">Đóng</button>
+            </div>
+            <div class="modal-body">
+                <!-- Đổi mật khẩu của người dùng hiện tại -->
+                <div class="photo-box">
+                    <div class="form-label">Đổi mật khẩu tài khoản của bạn (<span id="pwOwnerName"></span>)</div>
+                    <form id="changePwForm" onsubmit="handleChangePassword(event)" class="grid-2">
+                        <div>
+                            <input id="oldPassword" class="input" type="password" required placeholder="Mật khẩu hiện tại">
+                        </div>
+                        <div>
+                            <input id="newPassword" class="input" type="password" required minlength="12" placeholder="Mật khẩu mới (tối thiểu 12 ký tự)">
+                        </div>
+                        <div style="grid-column: 1 / -1;">
+                            <button type="submit" class="btn btn-sm btn-primary">Cập nhật mật khẩu</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Chỉ admin mới thấy phần quản lý tài khoản -->
+                <div id="adminUsersSection" class="hidden">
+                    <div class="form-label" style="margin-top:12px;">Quản lý tài khoản (Chỉ Admin)</div>
+                    <form id="createUserForm" onsubmit="handleCreateUser(event)" class="photo-box">
+                        <div class="grid-2">
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="form-label" for="newUsername">Tên đăng nhập</label>
+                                <input id="newUsername" class="input" type="text" required placeholder="VD: canbo1">
+                            </div>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="form-label" for="newFullName">Họ tên hiển thị</label>
+                                <input id="newFullName" class="input" type="text" required placeholder="VD: Nguyễn Văn B">
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="form-label" for="newUserPass">Mật khẩu khởi tạo</label>
+                                <input id="newUserPass" class="input" type="password" required minlength="12" placeholder="Mật khẩu (tối thiểu 12 ký tự)">
+                            </div>
+                            <div class="form-group" style="margin-bottom:6px;">
+                                <label class="form-label" for="newUserRole">Vai trò phân quyền</label>
+                                <select id="newUserRole">
+                                    <option value="receiver">receiver (Tiếp nhận & giấy hẹn)</option>
+                                    <option value="processor">processor (Giải quyết & trả KQ)</option>
+                                    <option value="viewer">viewer (Chỉ xem & tra cứu)</option>
+                                    <option value="admin">admin (Quản trị toàn bộ)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-ok" style="margin-top:6px;">+ Thêm tài khoản</button>
+                    </form>
+
+                    <div id="usersListBox"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SAO LƯU & KHÔI PHỤC -->
+    <div id="backupModal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width:460px;">
+            <div class="modal-head">
+                <h3>Sao lưu & xuất dữ liệu</h3>
+                <button type="button" class="btn btn-sm" onclick="closeModal('backupModal')">Đóng</button>
+            </div>
+            <div class="modal-body" style="display:flex;flex-direction:column;gap:10px;">
+                <p style="margin:0;font-size:13px;color:var(--muted);">
+                    Dữ liệu được lưu tập trung trên máy chủ. Chỉ quản trị viên được phép xóa hồ sơ; hãy xuất tệp .JSON định kỳ để sao lưu.
+                </p>
+                <button type="button" class="btn btn-primary" onclick="exportJsonBackup()">Xuất sao lưu đầy đủ (.JSON)</button>
+                <button type="button" class="btn btn-ok" onclick="exportCsvList()">Xuất danh sách (.CSV)</button>
+                <label class="btn" style="cursor:pointer;">
+                    Nhập khôi phục từ tệp (.JSON)
+                    <input type="file" accept=".json" class="hidden" onchange="importJsonBackup(event)">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL XEM ẢNH PHÓNG TO -->
+    <div id="imgModal" class="modal-backdrop hidden" onclick="closeModal('imgModal')">
+        <div class="modal-card" style="max-width:720px;" onclick="event.stopPropagation()">
+            <div class="modal-head">
+                <h3 id="imgModalTitle">Xem ảnh</h3>
+                <button type="button" class="btn btn-sm" onclick="closeModal('imgModal')">Đóng</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <img id="imgModalSrc" style="max-width:100%;max-height:70dvh;border-radius:10px;" alt="Ảnh phóng to">
+            </div>
+        </div>
+    </div>
+
+    <div id="toastBox" class="toast-box"></div>
+
+    <script>
+        const DB_NAME = 'VanTuongTangThuDB';
+        const DB_VER = 1;
+        const REC_STORE = 'records';
+        const USR_STORE = 'users';
+
+        const LS_RECORDS = 'vt_tt_records_v1';
+        const LS_USERS = 'vt_tt_users_v1';
+        const LS_SESSION = 'vt_tt_session_v1';
+
+        const ROLE_LABELS = {
+            admin: 'Quản trị (admin)',
+            receiver: 'Tiếp nhận (receiver)',
+            processor: 'Giải quyết (processor)',
+            viewer: 'Xem tra cứu (viewer)'
+        };
+
+        let db = null;
+        let records = [];
+        let users = [];
+        let sessionUser = null;
+        let quickFilter = 'all';
+        let draftReceivePhoto = '';
+        let draftReturnPhoto = '';
+        let activeSlipRecord = null;
+        let csrfToken = '';
+
+        async function apiFetch(url, options = {}) {
+            const headers = { ...(options.headers || {}) };
+            if (options.body && !headers['Content-Type']) headers['Content-Type'] = 'application/json';
+            if (options.method && !['GET','HEAD'].includes(options.method.toUpperCase()) && csrfToken) headers['X-CSRF-Token'] = csrfToken;
+            const response = await fetch(url, { ...options, headers, credentials: 'same-origin' });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(data.error || `Lỗi máy chủ (${response.status})`);
+            if (data.csrfToken) csrfToken = data.csrfToken;
+            return data;
+        }
+
+        function todayISO() {
+            const d = new Date();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${d.getFullYear()}-${m}-${day}`;
+        }
+
+        function addDaysISO(baseISO, days) {
+            const parts = (baseISO || todayISO()).split('-');
+            const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+            d.setDate(d.getDate() + Number(days));
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${d.getFullYear()}-${m}-${day}`;
+        }
+
+        function formatVN(iso) {
+            if (!iso) return '---';
+            const p = iso.split('-');
+            return p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : iso;
+        }
+
+        function esc(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function showToast(text) {
+            const box = document.getElementById('toastBox');
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.textContent = text;
+            box.appendChild(el);
+            setTimeout(() => el.remove(), 2600);
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function togglePasswordField(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const isPass = input.type === 'password';
+            input.type = isPass ? 'text' : 'password';
+            btn.textContent = isPass ? 'Ẩn' : 'Hiện';
+        }
+
+        // SHA-256 hash using Web Crypto with deterministic fallback
+        async function hashPassword(plain) {
+            const text = String(plain);
+            try {
+                if (window.crypto && window.crypto.subtle && window.TextEncoder) {
+                    const buf = new TextEncoder().encode(text);
+                    const digest = await window.crypto.subtle.digest('SHA-256', buf);
+                    return Array.from(new Uint8Array(digest))
+                        .map(b => b.toString(16).padStart(2, '0'))
+                        .join('');
+                }
+            } catch (e) {
+                // fallback below
+            }
+            let h1 = 0x811c9dc5;
+            let h2 = 0x01000193;
+            for (let i = 0; i < text.length; i++) {
+                const c = text.charCodeAt(i);
+                h1 ^= c;
+                h1 = Math.imul(h1, 0x01000193);
+                h2 ^= c + i;
+                h2 = Math.imul(h2, 0x85ebca6b);
+            }
+            return ('fb_' + (h1 >>> 0).toString(16).padStart(8, '0') + (h2 >>> 0).toString(16).padStart(8, '0'));
+        }
+
+        // Centralized server-side persistence (shared across all authorized devices)
+        async function readAllFromStore(storeName, lsKey) {
+            if (storeName === REC_STORE) return await apiFetch('/api/records');
+            if (storeName === USR_STORE) return await apiFetch('/api/users');
+            return [];
+        }
+
+        async function putOneToStore(storeName, lsKey, item, listRef) {
+            if (storeName !== REC_STORE) throw new Error('Không hỗ trợ ghi trực tiếp loại dữ liệu này.');
+            await apiFetch('/api/records/' + encodeURIComponent(item.id), { method: 'PUT', body: JSON.stringify(item) });
+            const idx = listRef.findIndex(x => x.id === item.id);
+            if (idx >= 0) listRef[idx] = item; else listRef.push(item);
+        }
+
+        async function removeOneFromStore(storeName, lsKey, keyVal, listRef) {
+            if (storeName !== REC_STORE) throw new Error('Không hỗ trợ xóa loại dữ liệu này.');
+            await apiFetch('/api/records/' + encodeURIComponent(keyVal), { method: 'DELETE' });
+            const idx = listRef.findIndex(x => x.id === keyVal);
+            if (idx >= 0) listRef.splice(idx, 1);
+        }
+
+        // Permissions
+        function canCreateRecord() {
+            return sessionUser && (sessionUser.role === 'admin' || sessionUser.role === 'receiver');
+        }
+
+        function canEditRecord() {
+            return sessionUser && (sessionUser.role === 'admin' || sessionUser.role === 'receiver' || sessionUser.role === 'processor');
+        }
+
+        function canDeleteRecord() {
+            return sessionUser && sessionUser.role === 'admin';
+        }
+
+        // Login & server-managed session
+        async function handleLogin(e) {
+            e.preventDefault();
+            const errBox = document.getElementById('loginError');
+            errBox.classList.add('hidden');
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            try {
+                const data = await apiFetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }) });
+                sessionUser = data.user;
+                csrfToken = data.csrfToken || csrfToken;
+                document.getElementById('loginForm').reset();
+                await enterApp();
+            } catch (err) {
+                errBox.textContent = err.message || 'Tên đăng nhập hoặc mật khẩu không đúng.';
+                errBox.classList.remove('hidden');
+            }
+        }
+
+        async function handleLogout() {
+            try { await apiFetch('/api/logout', { method: 'POST', body: '{}' }); } catch (e) {}
+            sessionUser = null;
+            records = [];
+            document.getElementById('appScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+        }
+
+        async function enterApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('appScreen').classList.remove('hidden');
+            document.getElementById('currentUserLabel').textContent = `${sessionUser.fullName} (${sessionUser.username})`;
+            document.getElementById('currentRoleBadge').textContent = ROLE_LABELS[sessionUser.role] || sessionUser.role;
+            document.getElementById('btnAddRecord').classList.toggle('hidden', !canCreateRecord());
+            records = await readAllFromStore(REC_STORE, LS_RECORDS);
+            refreshView();
+        }
+
+        // Deadline calculation
+        function getDeadlineState(rec) {
+            if (rec.isReturned) {
+                return { kind: 'returned', label: 'Đã trả kết quả', badge: 'badge-ok', priority: 4 };
+            }
+            const tParts = todayISO().split('-');
+            const dParts = (rec.dueDate || todayISO()).split('-');
+            const tDate = new Date(Number(tParts[0]), Number(tParts[1]) - 1, Number(tParts[2]));
+            const dDate = new Date(Number(dParts[0]), Number(dParts[1]) - 1, Number(dParts[2]));
+            const diffDays = Math.round((dDate - tDate) / 86400000);
+
+            if (diffDays < 0) {
+                return { kind: 'overdue', label: `Quá hạn ${Math.abs(diffDays)} ngày`, badge: 'badge-danger', priority: 1 };
+            }
+            if (diffDays === 0) {
+                return { kind: 'dueSoon', label: 'Đến hạn hôm nay', badge: 'badge-warn', priority: 2 };
+            }
+            if (diffDays === 1) {
+                return { kind: 'dueSoon', label: 'Đến hạn ngày mai', badge: 'badge-warn', priority: 2 };
+            }
+            return { kind: 'normal', label: `Còn ${diffDays} ngày`, badge: 'badge-info', priority: 3 };
+        }
+
+        function refreshView() {
+            updateStatsAndAlert();
+            updateHamletOptions();
+            renderRecords();
+        }
+
+        function updateStatsAndAlert() {
+            let processing = 0;
+            let dueSoon = 0;
+            let overdue = 0;
+            let returned = 0;
+
+            for (const r of records) {
+                if (r.isReturned) {
+                    returned++;
+                } else {
+                    processing++;
+                    const st = getDeadlineState(r);
+                    if (st.kind === 'overdue') overdue++;
+                    else if (st.kind === 'dueSoon') dueSoon++;
+                }
+            }
+
+            document.getElementById('stTotal').textContent = records.length;
+            document.getElementById('stProcessing').textContent = processing;
+            document.getElementById('stDueSoon').textContent = dueSoon;
+            document.getElementById('stOverdue').textContent = overdue;
+            document.getElementById('stReturned').textContent = returned;
+
+            const alertEl = document.getElementById('deadlineAlert');
+            if (overdue > 0 || dueSoon > 0) {
+                const bits = [];
+                if (overdue > 0) bits.push(`${overdue} hồ sơ quá hạn`);
+                if (dueSoon > 0) bits.push(`${dueSoon} hồ sơ sắp đến hạn`);
+                document.getElementById('deadlineAlertText').textContent = `Cảnh báo: ${bits.join(' và ')} chưa trả kết quả.`;
+                alertEl.classList.remove('hidden');
+            } else {
+                alertEl.classList.add('hidden');
+            }
+        }
+
+        function updateHamletOptions() {
+            const sel = document.getElementById('hamletFilter');
+            const cur = sel.value;
+            const list = [...new Set(records.map(r => (r.hamlet || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'vi'));
+            sel.innerHTML = `<option value="all">Tất cả các thôn</option>` +
+                list.map(h => `<option value="${esc(h)}">${esc(h)}</option>`).join('');
+            if (list.includes(cur)) sel.value = cur;
+        }
+
+        function setQuickFilter(f) {
+            quickFilter = f;
+            document.querySelectorAll('#quickChips .chip').forEach(c => {
+                c.classList.toggle('active', c.dataset.f === f);
+            });
+            renderRecords();
+        }
+
+        function renderRecords() {
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            const hFilter = document.getElementById('hamletFilter').value;
+            const sortBy = document.getElementById('sortFilter').value;
+
+            const list = records.filter(r => {
+                const st = getDeadlineState(r);
+                if (hFilter !== 'all' && r.hamlet !== hFilter) return false;
+                if (q) {
+                    const hay = `${r.applicantName} ${r.applicantPhone} ${r.hamlet} ${r.recordNumber} ${r.note || ''}`.toLowerCase();
+                    if (!hay.includes(q)) return false;
+                }
+                if (quickFilter === 'urgent') return !r.isReturned && (st.kind === 'overdue' || st.kind === 'dueSoon');
+                if (quickFilter === 'overdue') return !r.isReturned && st.kind === 'overdue';
+                if (quickFilter === 'dueSoon') return !r.isReturned && st.kind === 'dueSoon';
+                if (quickFilter === 'processing') return !r.isReturned;
+                if (quickFilter === 'returned') return !!r.isReturned;
+                return true;
+            });
+
+            list.sort((a, b) => {
+                if (sortBy === 'newest') {
+                    return (b.receiveDate || '').localeCompare(a.receiveDate || '') || (b.createdAt || 0) - (a.createdAt || 0);
+                }
+                if (sortBy === 'dueAsc') {
+                    return (a.dueDate || '').localeCompare(b.dueDate || '');
+                }
+                const pa = getDeadlineState(a).priority;
+                const pb = getDeadlineState(b).priority;
+                if (pa !== pb) return pa - pb;
+                return (a.dueDate || '').localeCompare(b.dueDate || '');
+            });
+
+            document.getElementById('visibleCount').textContent = list.length;
+            const container = document.getElementById('recordsList');
+            const empty = document.getElementById('emptyList');
+
+            if (!list.length) {
+                container.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            container.innerHTML = list.map(r => {
+                const st = getDeadlineState(r);
+                const cardClass = st.kind === 'overdue' ? 'rec-card is-overdue' : (st.kind === 'dueSoon' ? 'rec-card is-due' : 'rec-card');
+                const cleanPhone = String(r.applicantPhone || '').replace(/[^\d+]/g, '');
+
+                return `
+                <article class="${cardClass}">
+                    <div>
+                        <div class="rec-top">
+                            <span class="rec-code">${esc(r.recordNumber)}</span>
+                            <span class="badge ${st.badge}">${esc(st.label)}</span>
+                        </div>
+                        <h3 class="rec-name">${esc(r.applicantName)}</h3>
+                        <div class="rec-line">
+                            <span>Thôn: <strong>${esc(r.hamlet)}</strong></span>
+                            <span>•</span>
+                            <a class="phone-link" href="tel:${esc(cleanPhone)}">Gọi: ${esc(r.applicantPhone)}</a>
+                        </div>
+                        ${r.note ? `<div class="rec-line" style="color:#475569;">Nội dung: ${esc(r.note)}</div>` : ''}
+                        <div class="dates-box" style="margin-top:8px;">
+                            <div><small>Ngày tiếp nhận</small><strong>${formatVN(r.receiveDate)}</strong></div>
+                            <div><small>Ngày hẹn trả</small><strong>${formatVN(r.dueDate)}</strong></div>
+                        </div>
+                        ${r.isReturned ? `<div class="rec-line" style="color:#047857;font-weight:700;margin-top:6px;">Đã trả ngày: ${formatVN(r.returnedDate)}</div>` : ''}
+                        <div class="thumb-row" style="margin-top:8px;">
+                            ${r.receivePhoto ? `<button type="button" class="thumb-btn" onclick="viewPhoto('${r.receivePhoto}', 'Ảnh đơn - ${esc(r.recordNumber)}')"><img src="${r.receivePhoto}" alt=""><span>Ảnh đơn</span></button>` : ''}
+                            ${r.returnPhoto ? `<button type="button" class="thumb-btn" onclick="viewPhoto('${r.returnPhoto}', 'Ảnh kết quả - ${esc(r.recordNumber)}')"><img src="${r.returnPhoto}" alt=""><span>Ảnh kết quả</span></button>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="rec-actions">
+                        <button type="button" class="btn btn-sm btn-warn" onclick="openSlipModal('${r.id}')">Giấy hẹn</button>
+                        ${canEditRecord() ? `<button type="button" class="btn btn-sm" onclick="openRecordModal('${r.id}')">Sửa / Trả KQ</button>` : ''}
+                        ${canDeleteRecord() ? `<button type="button" class="btn btn-sm btn-danger" onclick="deleteRecord('${r.id}')">Xóa</button>` : ''}
+                    </div>
+                </article>`;
+            }).join('');
+        }
+
+        // Record form & photo compression
+        function openRecordModal(id = null) {
+            if (id && !canEditRecord()) {
+                showToast('Tài khoản của bạn chỉ có quyền xem.');
+                return;
+            }
+            if (!id && !canCreateRecord()) {
+                showToast('Vai trò hiện tại không có quyền tiếp nhận hồ sơ mới.');
+                return;
+            }
+
+            document.getElementById('recordForm').reset();
+            draftReceivePhoto = '';
+            draftReturnPhoto = '';
+            document.getElementById('receivePreviewWrap').classList.add('hidden');
+            document.getElementById('returnPreviewWrap').classList.add('hidden');
+
+            if (id) {
+                const r = records.find(x => x.id === id);
+                if (!r) return;
+                document.getElementById('recordModalTitle').textContent = 'Cập nhật hồ sơ';
+                document.getElementById('recId').value = r.id;
+                document.getElementById('recDate').value = r.receiveDate || todayISO();
+                document.getElementById('dueDate').value = r.dueDate || addDaysISO(todayISO(), 7);
+                document.getElementById('applicantName').value = r.applicantName || '';
+                document.getElementById('applicantPhone').value = r.applicantPhone || '';
+                document.getElementById('hamletInput').value = r.hamlet || '';
+                document.getElementById('recordNumber').value = r.recordNumber || '';
+                document.getElementById('recordNote').value = r.note || '';
+                document.getElementById('isReturnedChk').checked = !!r.isReturned;
+                document.getElementById('returnedDate').value = r.returnedDate || todayISO();
+
+                if (r.receivePhoto) {
+                    draftReceivePhoto = r.receivePhoto;
+                    document.getElementById('receivePreviewImg').src = r.receivePhoto;
+                    document.getElementById('receivePreviewWrap').classList.remove('hidden');
+                }
+                if (r.returnPhoto) {
+                    draftReturnPhoto = r.returnPhoto;
+                    document.getElementById('returnPreviewImg').src = r.returnPhoto;
+                    document.getElementById('returnPreviewWrap').classList.remove('hidden');
+                }
+            } else {
+                const t = todayISO();
+                document.getElementById('recordModalTitle').textContent = 'Tiếp nhận hồ sơ';
+                document.getElementById('recId').value = '';
+                document.getElementById('recDate').value = t;
+                document.getElementById('dueDate').value = addDaysISO(t, 7);
+                document.getElementById('returnedDate').value = t;
+                document.getElementById('isReturnedChk').checked = false;
+            }
+
+            toggleReturnedBox();
+            openModal('recordModal');
+        }
+
+        function onReceiveDateChange() {
+            const base = document.getElementById('recDate').value || todayISO();
+            document.getElementById('dueDate').value = addDaysISO(base, 7);
+        }
+
+        function setDuePlusDays(days) {
+            const base = document.getElementById('recDate').value || todayISO();
+            document.getElementById('dueDate').value = addDaysISO(base, days);
+        }
+
+        function toggleReturnedBox() {
+            const checked = document.getElementById('isReturnedChk').checked;
+            document.getElementById('returnedFields').classList.toggle('hidden', !checked);
+            if (checked && !document.getElementById('returnedDate').value) {
+                document.getElementById('returnedDate').value = todayISO();
+            }
+        }
+
+        function compressPhoto(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const maxW = 1100;
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxW) {
+                            h = Math.round((h * maxW) / w);
+                            w = maxW;
+                        }
+                        const c = document.createElement('canvas');
+                        c.width = w;
+                        c.height = h;
+                        c.getContext('2d').drawImage(img, 0, 0, w, h);
+                        resolve(c.toDataURL('image/jpeg', 0.75));
+                    };
+                    img.onerror = reject;
+                    img.src = ev.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handlePhotoChange(e, kind) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            try {
+                const dataUrl = await compressPhoto(file);
+                if (kind === 'receive') {
+                    draftReceivePhoto = dataUrl;
+                    document.getElementById('receivePreviewImg').src = dataUrl;
+                    document.getElementById('receivePreviewWrap').classList.remove('hidden');
+                } else {
+                    draftReturnPhoto = dataUrl;
+                    document.getElementById('returnPreviewImg').src = dataUrl;
+                    document.getElementById('returnPreviewWrap').classList.remove('hidden');
+                }
+                showToast('Đã tải ảnh');
+            } catch (err) {
+                showToast('Không thể đọc ảnh');
+            }
+        }
+
+        function clearPhoto(kind) {
+            if (kind === 'receive') {
+                draftReceivePhoto = '';
+                document.getElementById('receivePreviewWrap').classList.add('hidden');
+            } else {
+                draftReturnPhoto = '';
+                document.getElementById('returnPreviewWrap').classList.add('hidden');
+            }
+        }
+
+        async function saveRecord(e) {
+            e.preventDefault();
+            const idVal = document.getElementById('recId').value;
+            const oldRec = idVal ? records.find(x => x.id === idVal) : null;
+            const isReturned = document.getElementById('isReturnedChk').checked;
+
+            const rec = {
+                id: idVal || ('r_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)),
+                receiveDate: document.getElementById('recDate').value,
+                dueDate: document.getElementById('dueDate').value,
+                applicantName: document.getElementById('applicantName').value.trim(),
+                applicantPhone: document.getElementById('applicantPhone').value.trim(),
+                hamlet: document.getElementById('hamletInput').value.trim(),
+                recordNumber: document.getElementById('recordNumber').value.trim(),
+                note: document.getElementById('recordNote').value.trim(),
+                isReturned,
+                returnedDate: isReturned ? (document.getElementById('returnedDate').value || todayISO()) : '',
+                receivePhoto: draftReceivePhoto,
+                returnPhoto: draftReturnPhoto,
+                createdAt: oldRec ? oldRec.createdAt : Date.now(),
+                updatedAt: Date.now()
+            };
+
+            await putOneToStore(REC_STORE, LS_RECORDS, rec, records);
+            closeModal('recordModal');
+            refreshView();
+            showToast('Đã lưu hồ sơ');
+        }
+
+        async function deleteRecord(id) {
+            if (!canDeleteRecord()) {
+                showToast('Chỉ quản trị viên (admin) mới có quyền xóa hồ sơ.');
+                return;
+            }
+            await removeOneFromStore(REC_STORE, LS_RECORDS, id, records);
+            refreshView();
+            showToast('Đã xóa hồ sơ');
+        }
+
+        function viewPhoto(src, title) {
+            document.getElementById('imgModalSrc').src = src;
+            document.getElementById('imgModalTitle').textContent = title;
+            openModal('imgModal');
+        }
+
+        // Appointment slip (+7 / +10 days only)
+        function openSlipModal(id) {
+            const r = records.find(x => x.id === id);
+            if (!r) return;
+            activeSlipRecord = { ...r };
+            renderSlipContent();
+            openModal('slipModal');
+        }
+
+        async function applySlipQuickDays(days) {
+            if (!activeSlipRecord) return;
+            const nextDue = addDaysISO(activeSlipRecord.receiveDate || todayISO(), days);
+            activeSlipRecord.dueDate = nextDue;
+            renderSlipContent();
+
+            const idx = records.findIndex(x => x.id === activeSlipRecord.id);
+            if (idx >= 0 && canEditRecord()) {
+                const updated = { ...records[idx], dueDate: nextDue, updatedAt: Date.now() };
+                await putOneToStore(REC_STORE, LS_RECORDS, updated, records);
+                refreshView();
+            }
+            showToast(`Đã đặt hẹn +${days} ngày (${formatVN(nextDue)})`);
+        }
+
+        function renderSlipContent() {
+            const r = activeSlipRecord;
+            if (!r) return;
+            document.getElementById('slipRecNum').textContent = r.recordNumber;
+            document.getElementById('slipName').textContent = r.applicantName;
+            document.getElementById('slipPhone').textContent = r.applicantPhone;
+            document.getElementById('slipHamlet').textContent = r.hamlet;
+            document.getElementById('slipRecDate').textContent = formatVN(r.receiveDate);
+            document.getElementById('slipDueDate').textContent = formatVN(r.dueDate);
+            document.getElementById('slipSignName').textContent = r.applicantName;
+            document.getElementById('slipSignOfficer').textContent = sessionUser ? sessionUser.fullName : '';
+
+            const noteLine = document.getElementById('slipNoteLine');
+            if (r.note) {
+                document.getElementById('slipNote').textContent = r.note;
+                noteLine.classList.remove('hidden');
+            } else {
+                noteLine.classList.add('hidden');
+            }
+
+            const p = (r.receiveDate || todayISO()).split('-');
+            document.getElementById('slipSignDate').textContent = p.length === 3
+                ? `Vạn Tường, ngày ${p[2]} tháng ${p[1]} năm ${p[0]}`
+                : '';
+        }
+
+        function downloadSlipPng() {
+            const r = activeSlipRecord;
+            if (!r) return;
+            const c = document.createElement('canvas');
+            c.width = 900;
+            c.height = 620;
+            const ctx = c.getContext('2d');
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.strokeStyle = '#0f172a';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(20, 20, c.width - 40, c.height - 40);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 16px "Times New Roman", serif';
+            ctx.fillText('TRA CỨU TÀNG THƯ VẠN TƯỜNG', 240, 62);
+            ctx.fillText('CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM', 650, 62);
+            ctx.font = '15px "Times New Roman", serif';
+            ctx.fillText('Bộ phận tiếp nhận hồ sơ', 240, 84);
+            ctx.fillText('Độc lập - Tự do - Hạnh phúc', 650, 84);
+
+            ctx.font = 'bold 24px "Times New Roman", serif';
+            ctx.fillText('GIẤY HẸN TRẢ KẾT QUẢ', c.width / 2, 140);
+            ctx.font = 'bold 17px "Times New Roman", serif';
+            ctx.fillText(`Số hồ sơ cư trú: ${r.recordNumber}`, c.width / 2, 168);
+
+            ctx.textAlign = 'left';
+            ctx.font = '18px "Times New Roman", serif';
+            let y = 215;
+            const lines = [
+                `Người nộp: ${r.applicantName}`,
+                `Số điện thoại: ${r.applicantPhone}`,
+                `Thôn: ${r.hamlet}`,
+                r.note ? `Nội dung: ${r.note}` : null,
+                `Ngày tiếp nhận: ${formatVN(r.receiveDate)}`,
+                `Ngày hẹn trả kết quả: ${formatVN(r.dueDate)}`
+            ].filter(Boolean);
+
+            for (const line of lines) {
+                ctx.fillText(line, 56, y);
+                y += 34;
+            }
+
+            ctx.font = 'italic 15px "Times New Roman", serif';
+            ctx.fillText('Khi đến nhận kết quả, vui lòng mang theo giấy hẹn và giấy tờ tùy thân.', 56, y + 12);
+
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 16px "Times New Roman", serif';
+            ctx.fillText('NGƯỜI NỘP', 250, 500);
+            ctx.fillText('CÁN BỘ TIẾP NHẬN', 650, 500);
+            ctx.font = '16px "Times New Roman", serif';
+            ctx.fillText(r.applicantName, 250, 585);
+            ctx.fillText(sessionUser ? sessionUser.fullName : '', 650, 585);
+
+            const a = document.createElement('a');
+            a.download = `GiayHen_${r.recordNumber}.png`;
+            a.href = c.toDataURL('image/png');
+            a.click();
+            showToast('Đã tải ảnh PNG giấy hẹn');
+        }
+
+        // Account management & password change (validated by the server)
+        async function openAccountModal() {
+            document.getElementById('changePwForm').reset();
+            document.getElementById('pwOwnerName').textContent = sessionUser.username;
+            const isAdmin = sessionUser.role === 'admin';
+            document.getElementById('adminUsersSection').classList.toggle('hidden', !isAdmin);
+            if (isAdmin) {
+                users = await readAllFromStore(USR_STORE, LS_USERS);
+                renderUsersList();
+            }
+            openModal('accountModal');
+        }
+
+        async function handleChangePassword(e) {
+            e.preventDefault();
+            try {
+                await apiFetch('/api/change-password', { method: 'POST', body: JSON.stringify({
+                    oldPassword: document.getElementById('oldPassword').value,
+                    newPassword: document.getElementById('newPassword').value
+                }) });
+                document.getElementById('changePwForm').reset();
+                showToast('Đã đổi mật khẩu. Hãy sử dụng mật khẩu mới ở lần đăng nhập tiếp theo.');
+            } catch (err) { showToast(err.message); }
+        }
+
+        async function handleCreateUser(e) {
+            e.preventDefault();
+            if (sessionUser.role !== 'admin') return;
+            const payload = {
+                username: document.getElementById('newUsername').value.trim(),
+                fullName: document.getElementById('newFullName').value.trim(),
+                password: document.getElementById('newUserPass').value,
+                role: document.getElementById('newUserRole').value
+            };
+            try {
+                await apiFetch('/api/users', { method: 'POST', body: JSON.stringify(payload) });
+                users = await readAllFromStore(USR_STORE, LS_USERS);
+                document.getElementById('createUserForm').reset();
+                renderUsersList(); showToast(`Đã tạo tài khoản ${payload.username}`);
+            } catch (err) { showToast(err.message); }
+        }
+
+        async function updateUserRole(username, role) {
+            if (sessionUser.role !== 'admin') return;
+            try {
+                await apiFetch('/api/users/' + encodeURIComponent(username), { method: 'PATCH', body: JSON.stringify({ role }) });
+                users = await readAllFromStore(USR_STORE, LS_USERS); renderUsersList(); showToast('Đã cập nhật vai trò');
+            } catch (err) { showToast(err.message); }
+        }
+
+        async function deleteUserAccount(username) {
+            if (sessionUser.role !== 'admin') return;
+            if (!confirm(`Xóa tài khoản ${username}?`)) return;
+            try {
+                await apiFetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE' });
+                users = await readAllFromStore(USR_STORE, LS_USERS); renderUsersList(); showToast('Đã xóa tài khoản');
+            } catch (err) { showToast(err.message); }
+        }
+
+        function renderUsersList() {
+            const box = document.getElementById('usersListBox');
+            box.innerHTML = users.map(u => `
+                <div class="acc-item">
+                    <div><strong>${esc(u.fullName)}</strong> <span style="color:var(--muted);font-size:12px;">(@${esc(u.username)})</span></div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <select style="width:auto;padding:6px 8px;font-size:12px;" onchange="updateUserRole('${esc(u.username)}', this.value)">
+                            <option value="receiver" ${u.role === 'receiver' ? 'selected' : ''}>receiver</option>
+                            <option value="processor" ${u.role === 'processor' ? 'selected' : ''}>processor</option>
+                            <option value="viewer" ${u.role === 'viewer' ? 'selected' : ''}>viewer</option>
+                            <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>admin</option>
+                        </select>
+                        ${u.username !== sessionUser.username ? `<button type="button" class="btn btn-sm btn-danger" onclick="deleteUserAccount('${esc(u.username)}')">Xóa</button>` : ''}
+                    </div>
+                </div>`).join('');
+        }
+
+        // Backup & Export
+        function openBackupModal() {
+            openModal('backupModal');
+        }
+
+        function exportJsonBackup() {
+            const payload = JSON.stringify({ exportedAt: new Date().toISOString(), records }, null, 2);
+            const blob = new Blob([payload], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `TangThu_VanTuong_${todayISO()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Đã xuất tệp sao lưu .JSON');
+        }
+
+        function exportCsvList() {
+            const headers = ['Số hồ sơ cư trú', 'Ngày tiếp nhận', 'Người nộp', 'SĐT', 'Thôn', 'Ngày hẹn trả', 'Đã trả kết quả', 'Ngày trả', 'Nội dung'];
+            const rows = records.map(r => [
+                r.recordNumber,
+                formatVN(r.receiveDate),
+                r.applicantName,
+                `="${r.applicantPhone}"`,
+                r.hamlet,
+                formatVN(r.dueDate),
+                r.isReturned ? 'Đã trả' : 'Chưa trả',
+                formatVN(r.returnedDate),
+                r.note || ''
+            ]);
+            const csv = '\uFEFF' + [headers, ...rows].map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `DanhSach_VanTuong_${todayISO()}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Đã xuất danh sách .CSV');
+        }
+
+        function importJsonBackup(e) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                try {
+                    const parsed = JSON.parse(ev.target.result);
+                    const list = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.records) ? parsed.records : null);
+                    if (!list) throw new Error('Sai định dạng');
+                    for (const item of list) {
+                        if (item && item.applicantName && item.recordNumber) {
+                            await putOneToStore(REC_STORE, LS_RECORDS, {
+                                ...item,
+                                id: item.id || ('r_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6))
+                            }, records);
+                        }
+                    }
+                    closeModal('backupModal');
+                    refreshView();
+                    showToast(`Đã khôi phục ${list.length} hồ sơ`);
+                } catch (err) {
+                    showToast('Tệp sao lưu không hợp lệ');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Boot: restore only a server-validated session; no local admin or local data fallback.
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const session = await apiFetch('/api/session');
+                csrfToken = session.csrfToken || '';
+                if (session.user) {
+                    sessionUser = session.user;
+                    await enterApp();
+                }
+            } catch (err) {
+                const errBox = document.getElementById('loginError');
+                errBox.textContent = 'Không kết nối được máy chủ. Vui lòng tải lại trang hoặc liên hệ quản trị viên.';
+                errBox.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
